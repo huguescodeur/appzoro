@@ -1,0 +1,76 @@
+{% extends './base.html' %}
+
+{% block content %}
+<!-- ./ajouter.html  -->
+<a class="produit-btn" href="{{url_for('vente')}}"><button type="button">Ajouter</button></a>
+<!-- <button type="button">Ajouter</button> -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flash-messages flash_message_flask">
+    {% for message in messages %}
+    <h3 id="flash-message">{{ message }}</h3>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+<!-- * Table -->
+<div class="mytable-produit">
+    <table border="2" width="100%">
+        <!-- * Legend -->
+        <caption>
+            Liste des Ventes
+        </caption>
+
+        <!-- * En-Tête -->
+        <thead>
+            <tr>
+            <tr>
+                <th>ID Vente</th>
+                <th>ID Produit</th>
+                <th>Name</th>
+                <th>Quantité</th>
+                <th>Montant total</th>
+
+
+                <th>Action</th>
+            </tr>
+            </tr>
+        </thead>
+
+        <!-- * Corps du tableau -->
+        <tbody>
+            {% for NomProduit, IdProduit, montant_total, Quantitevendu, IdVente in results %}
+            <tr>
+                <td>{{ IdVente }}</td>
+                <td>{{ IdProduit }}</td>
+                <td>{{ NomProduit }}</td>
+                <td>{{ Quantitevendu }}</td>
+                <td>{{ montant_total }}</td>
+                <td>
+                    <div>
+                        <button class="table-btn" type="button">
+                            <a href="/modifier_vente/{{IdVente}}">modifier</a>
+                        </button>
+
+                        <button class="table-btn" type="button">
+                            <a href="/supprimer_vente/{{idVente}}">supprimer</a>
+                        </button>
+
+
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+
+
+
+        </tbody>
+    </table>
+
+
+</div>
+
+{% endblock %}

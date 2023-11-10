@@ -1,0 +1,55 @@
+{% extends './base.html' %}
+{% block content %}
+
+
+
+<div class="form-ajouter">
+    <h2>Modifiaction du stock</h2>
+    <div class="form-center-ajouter">
+        <form action="/modifier_stock/{{stock_details[0]}}" method="post">
+
+            <label for="magasin"> Magasin: </label>
+            <select id="magasin" name="magasin">
+                {% for magasin_id, magasin_name in magasins %}
+                {% if magasin_id == stock_details[-2] %}
+                <option value="{{ magasin_id }}" selected>{{ magasin_name }}</option>
+                {% else %}
+                <option value="{{ magasin_id }}">{{ magasin_name }}</option>
+                {% endif %}
+                {% endfor %}
+
+            </select>
+
+            <label for="produit"> Produit: </label>
+            <select id="produit" name="produit">
+                {% for produit_id, produit_name in produits %}
+                {% if produit_id == stock_details[2] %}
+                <option value="{{ produit_id }}" selected>{{ produit_name }}</option>
+                {% else %}
+                <option value="{{ produit_id }}">{{ produit_name }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+
+
+            <label for="nouvelle_quantite">Nouvelle Quantité:</label>
+            <input type="number" name="nouvelle_quantite" value="{{stock_details[1] }}" min="1" required>
+
+
+
+            <div class="button">
+                <button>
+                    <a href="{{url_for('liste_stock')}}"> Retour </a>
+                </button>
+
+                <button type="submit">
+                    Valider
+                </button>
+            </div>
+        </form>
+
+
+
+    </div>
+</div>
+{% endblock %}

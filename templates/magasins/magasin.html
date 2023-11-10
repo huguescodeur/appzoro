@@ -1,0 +1,70 @@
+{% extends './base.html' %}
+
+{% block content %}
+<!-- ./ajouter.html  -->
+<a class="produit-btn" href="/ajouter_magasin/"><button type="button">Ajouter</button></a>
+<!-- <button type="button">Ajouter</button> -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flash-messages flash_message_flask">
+  {% for message in messages %}
+  <h3 id="flash-message">{{ message }}</h3>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+<!-- * Table -->
+<div class="mytable-produit">
+  <table border="2" width="100%">
+    <!-- * Legend -->
+    <caption>
+      Liste des Magasins
+    </caption>
+
+    <!-- * En-Tête -->
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Téléphone</th>
+        <th>Mail</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <!-- * Corps du tableau -->
+    <tbody>
+      {% for magasin in magasins %}
+      <tr>
+        <td>{{magasin[0]}}</td>
+        <td>{{magasin[1]}}</td>
+        <td>{{magasin[2]}}</td>
+        <td>{{magasin[3]}}</td>
+        <td>{{magasin[4]}}</td>
+        <td>
+          <div>
+            <button class="table-btn" type="button">
+              <a href="/modifier_magasin/{{magasin[0]}}">modifier</a>
+            </button>
+
+            <button class="table-btn" type="button">
+              <a href="/supp_mag_traitement/{{magasin[0]}}">supprimer</a>
+            </button>
+
+
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+
+
+
+
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

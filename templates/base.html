@@ -4,8 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-    <link rel="stylesheet" href="../static/style.css" />
+  {% if title %}
+  <title>Zoro - {{title}} </title>
+  {% else %}
+  <title>Zoro</title>
+  {% endif %}
+
+  <!-- ? Link Acceuil -->
+  <link rel="stylesheet" href="../static/style.css" />
+
 
 </head>
 
@@ -17,10 +24,23 @@
       <!-- ? Sidebar -->
       {% include './partials/sidebar.html' %}
       <!-- ? Mini-main -->
-      <div class="mini-main">{% block content %} {% endblock %}</div>
+      <div class="mini-main">{% block content %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash-messages flash_message_flask">
+          {% for message in messages %}
+          <h3 id="flash-message">{{ message }}</h3>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% endblock %}
+      </div>
     </div>
   </div>
   <!-- <div class="main-center"></div> -->
+  <!-- ? Link JS -->
+  <script src="../static/js/script.js"></script>
 </body>
 
 </html>

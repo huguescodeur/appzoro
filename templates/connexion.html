@@ -8,28 +8,42 @@
 
   <!-- ? LINK CSS -->
 
-  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+  <link rel="stylesheet" href="../static/style.css" />
 </head>
 
 <body>
-  <!-- ? Hearder -->
-  {% include './partials/navbar.html' %}
 
   <!-- ? Connexion -->
-  <section class="incription">
-    <div class="section-insc">
-      <div class="form">
-        <h2>Connectez-vous</h2>
-        <form action="">
-          <input type="text" name="identifiant" placeholder="Identifiant" />
-          <input type="password" name="password" placeholder="Mot de passe" />
-          <!-- <button type="submit">Connexion</button> -->
-        </form>
-        <a href="/acceuil/"><button>Connexion</button></a>
-        <a href="#">Si pas de compte inscrivez-vous</a>
+  <div class="center">
+    <!-- ? Hearder -->
+    {% include './partials/navbar.html' %}
+
+
+    <section class="incription">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <h3 id="flash-message">{{ message }}</h3>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+
+      <div class="section-insc">
+        <div class="form-connexion">
+          <h2>Connectez-vous</h2>
+          <form action="{{url_for('login')}}" method="post">
+            <input type="text" name="username" placeholder="Identifiant" />
+            <input type="password" name="password" placeholder="Mot de passe" />
+            <!-- <button type="submit">Connexion</button> -->
+            <a href="/acceuil/"><button>Connexion</button></a>
+          </form>
+          <a href="{{url_for('register')}}">Si pas de compte inscrivez-vous</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </body>
 
 </html>

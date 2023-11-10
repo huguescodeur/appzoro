@@ -1,0 +1,70 @@
+{% extends './base.html' %}
+
+{% block content %}
+<!-- ./ajouter.html  -->
+<a class="produit-btn" href="/ajouter_produit/"><button type="button">Ajouter</button></a>
+<!-- <button type="button">Ajouter</button> -->
+<!-- <h3 class="flash_message_flask">Le MagasinX a été ajouté avec succès</h3> -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flash-messages flash_message_flask">
+  {% for message in messages %}
+  <h3 id="flash-message">{{ message }}</h3>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<!-- * Table -->
+<div class="mytable-produit">
+  <table border="2" width="100%">
+    <!-- * Legend -->
+    <caption>
+      Liste des Produits
+    </caption>
+
+    <!-- * En-Tête -->
+    <thead>
+      <tr>
+        <th>Id Produit</th>
+        <th>Nom Produit</th>
+        <th>Catégorie</th>
+        <th>Prix</th>
+
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <!-- * Corps du tableau -->
+    <tbody>
+      {% for produit in produits %}
+      <tr>
+        <td> {{produit[0]}} </td>
+        <td>{{produit[1]}}</td>
+        <td>{{produit[2]}}</td>
+        <td>{{produit[3]}}</td>
+
+        <td>
+          <div>
+            <button class="table-btn" type="button">
+              <a href="/modifier_produit/{{produit[0]}}">Modifier</a>
+            </button>
+
+            <button class="table-btn" type="button">
+              <a href="/supp_prod_traitement/{{produit[0]}}">supprimer</a>
+            </button>
+
+
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+
+
+
+
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,37 +1,49 @@
 <!-- ? Sidebar -->
 <section class="sidebar">
   <article class="article">
-    <a href="#">
+    <a href="{{url_for('acceuil')}}">
       <div class="item">
         <p>Acceuil</p>
       </div>
     </a>
 
-    <a href="#">
+    <a href="{{url_for('magasin')}}">
       <div class="item">
         <p>Magasin</p>
       </div>
     </a>
 
-    <a href="#">
+    <a href="{{url_for('produit')}}">
       <div class="item">
         <p>Produit</p>
       </div>
     </a>
 
-    <a href="#">
+    <a href="{{url_for('vente')}}">
       <div class="item">
         <p>Vente</p>
       </div>
     </a>
 
-    <a href="#">
+    <a href="{{url_for('liste_vente')}}">
+      <div class="item">
+        <p>Liste Vente</p>
+      </div>
+    </a>
+
+    <a href="{{url_for('stock')}}">
       <div class="item">
         <p>Stock</p>
       </div>
     </a>
 
-    <a href="/">
+    <a href="{{url_for('liste_stock')}}">
+      <div class="item">
+        <p>Liste Stock</p>
+      </div>
+    </a>
+
+    <a href="{{url_for('logout')}}">
       <div class="item">
         <p>Déconnection</p>
       </div>

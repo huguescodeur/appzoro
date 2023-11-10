@@ -1,0 +1,34 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="form-ajouter">
+    <h2>Modifier le produit</h2>
+    <div class="form-center-ajouter">
+        <form action="/modifier_produit/{{produit[0]}}" method="post">
+            <label for="name">Produit :</label>
+            <input type="text" name="name" id="name" value="{{produit[1]}}" required />
+
+            <label for="categorie">Catégorie :</label>
+            <input type="text" name="categorie" id="categorie" value="{{produit[2]}}" required />
+
+            <label for="prix">Prix :</label>
+            <input type="text" name="prix" id="prix" value="{{produit[3]}}" required />
+
+
+            <!-- <a href="./magasin.html">Retour</a> -->
+
+            <div class="button">
+                <button>
+                    <!-- Retour -->
+                    <a href="{{url_for('produit')}}"> Retour </a>
+                </button>
+
+                <button type="submit">
+                    Valider
+                    <!-- <a href=""> Valider </a> -->
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="form-ajouter">
+    <h2>Modifier le magasin</h2>
+    <div class="form-center-ajouter">
+        <form action="/modifier_magasin/{{magasin[0]}}" method="post">
+            <label for="name">Nom :</label>
+            <input type="text" name="name" id="name" value="{{magasin[1]}}" required />
+
+            <label for="adresse">Adresse :</label>
+            <input type="text" name="adresse" id="adresse" value="{{magasin[2]}}" required />
+
+            <label for="tel">Téléphone :</label>
+            <input type="tel" name="telephone" id="tel" value="{{magasin[3]}}" required />
+
+            <label for="email">Email :</label>
+            <input type="email" name="email" id="email" value="{{magasin[4]}}" required />
+            <!-- <a href="./magasin.html">Retour</a> -->
+
+            <div class="button">
+                <button>
+                    <a href="{{url_for('magasin')}}"> Retour </a>
+                </button>
+
+                <button type="submit">
+                    Valider
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

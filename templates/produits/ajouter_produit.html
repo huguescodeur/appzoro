@@ -1,0 +1,30 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="form-ajouter">
+  <h2>Ajouter un nouveau Produit</h2>
+  <div class="form-center-ajouter">
+    <form action="/ajouter_produit/" method="post">
+      <label for="name">Produit :</label>
+      <input type="text" name="name" id="name" required />
+
+      <label for="categorie">Catégorie :</label>
+      <input type="text" name="categorie" id="categorie" required />
+
+      <label for="prix">Prix :</label>
+      <input type="" name="prix" id="prix" required />
+
+      <!-- <a href="./magasin.html">Retour</a> -->
+      <div class="button">
+        <button>
+          <a href="{{url_for('produit')}}"> Retour </a>
+        </button>
+
+        <button type="submit">
+          Valider
+          <!-- <a href=""> Valider </a> -->
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

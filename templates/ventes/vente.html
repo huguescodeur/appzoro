@@ -1,0 +1,61 @@
+{% extends './base.html' %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flash-messages  flash_message_flask-vente">
+    {% for message in messages %}
+    <div>
+
+        <h3 id="flash-message ">{{ message }}</h3>
+    </div>
+
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<!-- <div class="flash_message_flask-vente">
+    <div>
+        <h3>Quantité insuffisante en stock</h3>
+    </div>
+</div> -->
+
+
+<div class="form-ajouter">
+    <h2>Enregistrer une Vente</h2>
+    <div class="form-center-ajouter">
+        <form action="/vente/" method="post">
+
+            <label for="magasin"> Magasin: </label>
+            <select id="magasin" name="magasin" required>
+                <!-- <option value="">Choisir un magasin</option> -->
+                {% for magasin_id, magasin_name in magasins %}
+                <option value="{{ magasin_id }}">{{ magasin_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="produit"> Produit: </label>
+            <select id="produit" name="produit" required>
+                <!-- <option value="">Choisir un produit</option> -->
+                {% for produit_id, produit_name in produits %}
+                <option value="{{ produit_id }}">{{ produit_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="quantite"> Quantité: </label>
+            <input type="number" id="quantite" name="quantite" min="1" value="1" required>
+
+            <div class="button">
+                <button>
+                    <a href="{{url_for('liste_stock')}}"> Retour </a>
+                </button>
+
+                <button type="submit">
+                    Valider
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

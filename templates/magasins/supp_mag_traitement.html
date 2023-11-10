@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="suppression-container">
+    <div class="suppression">
+        <h2>Suppression de magasin
+        </h2>
+        <div class="div-text-button">
+            <div class="div-text">
+                <div>
+                    <p>
+                        Vous êtes sur le point de supprimer le magasin n°{{magasin[0]}}. Êtes-vous
+                        sûr de vouloir continuer ?
+                    </p>
+                </div>
+            </div>
+            <div class="button">
+                <button>
+                    <a href="{{url_for('magasin')}}"> Retour </a>
+                </button>
+
+                <button>
+                    <a href="/supp_def_magasin/{{magasin[0]}}"> Valider </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
