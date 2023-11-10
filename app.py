@@ -1,5 +1,6 @@
 import platform
 from datetime import datetime
+from functools import wraps
 
 from flask_bcrypt import Bcrypt
 from flask import Flask, flash, redirect, render_template, request, url_for, session
@@ -19,12 +20,32 @@ app.config['MYSQL_DB'] = 'zorodb'
 app.config['SECRET_KEY'] = 'secret key'
 
 
+# ! Mécanisme de protection pour obligier le user à se connecter
+# ? Utiliser le décorateur @login_required
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Veuillez vous connecter pour accéder à cette page.', 'danger')
+            return redirect(url_for('connexion'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+# ? Ou Vérifier si l'utilisateur est connecté au début de chaque route
+    # if 'user_id' not in session:
+    #     flash('Veuillez vous connecter pour accéder à cette page.', 'danger')
+    #     return redirect(url_for('connexion'))
+
+
+# ! Routes / et acceuil
 @app.route("/")
 def connexion():
     return render_template("connexion.html")
 
 
 @app.route("/acceuil/")
+@login_required
 def acceuil():
     return render_template("base.html")
 
@@ -117,6 +138,7 @@ def login():
 
 # ? Route pour la déconnexion
 @app.route('/logout')
+@login_required
 def logout():
 
     # Déconnectons l'utilisateur en supprimant son ID de session
@@ -130,6 +152,7 @@ def logout():
 
 
 @app.route("/produit/")
+@login_required
 def produit():
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -151,6 +174,7 @@ def produit():
 
 # ? Ajouter un nouveau produit
 @app.route("/ajouter_produit/", methods=["POST", "GET"])
+@login_required
 def ajouter_produit():
     try:
         if request.method == 'GET':
@@ -190,6 +214,7 @@ def ajouter_produit():
 
 # ? Récupération de l'ID du produit à supprimer
 @app.route("/supp_prod_traitement/<int:_id>")
+@login_required
 def supp_prod_traitement(_id):
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -212,6 +237,7 @@ def supp_prod_traitement(_id):
 
 # ? Suppression définitive du produit
 @app.route("/supp_def_produit/<int:_id>")
+@login_required
 def supp_def_produit(_id):
     try:
         # ? Connection à ma db
@@ -244,6 +270,7 @@ def supp_def_produit(_id):
 
 # ? Modification du produit
 @app.route("/modifier_produit/<int:_id>", methods=["POST", "GET"])
+@login_required
 def modifier_produit(_id):
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -281,6 +308,7 @@ def modifier_produit(_id):
 # ! Gestion Back-End des Magasins
 # ? Affichons les magasins
 @app.route("/magasin/")
+@login_required
 def magasin():
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -302,6 +330,7 @@ def magasin():
 
 # ? Ajouter un nouveau magasin
 @app.route("/ajouter_magasin/", methods=["POST", "GET"])
+@login_required
 def ajouter_magasin():
     try:
         if request.method == 'GET':
@@ -342,6 +371,7 @@ def ajouter_magasin():
 
 # ? Récupération de l'ID du produit à supprimer
 @app.route("/supp_mag_traitement/<int:_id>")
+@login_required
 def supp_mag_traitement(_id):
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -364,6 +394,7 @@ def supp_mag_traitement(_id):
 
 # ? Suppression définitive du produit
 @app.route("/supp_def_magasin/<int:_id>")
+@login_required
 def supp_def_magasin(_id):
     try:
         # ? Connection à ma db
@@ -397,6 +428,7 @@ def supp_def_magasin(_id):
 
 
 @app.route("/modifier_magasin/<int:_id>", methods=["POST", "GET"])
+@login_required
 def modifier_magasin(_id):
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -435,6 +467,7 @@ def modifier_magasin(_id):
 # ! Gestion Back-End des Ventes
 # ? Afficher la page d'enregistrement des ventes
 @app.route('/vente/', methods=['GET', 'POST'])
+@login_required
 def vente():
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -511,6 +544,7 @@ def vente():
 
 # ? Afficher toutes les ventes
 @app.route('/liste_vente/', methods=['GET'])
+@login_required
 def liste_vente():
     try:
         # ? Connection à ma db
@@ -544,6 +578,7 @@ def liste_vente():
 
 # ? Modifier les ventes
 @app.route('/modifier_vente/<int:_id>', methods=['GET', 'POST'])
+@login_required
 def modifier_vente(_id):
     try:
         # ? Connection à ma db
@@ -621,6 +656,7 @@ def modifier_vente(_id):
 
 # ? Supprimer les ventes
 @app.route("/supprimer_vente/<int:_id>")
+@login_required
 def supprimer_vente(_id):
     try:
         # ? Connection à ma db
@@ -651,6 +687,7 @@ def supprimer_vente(_id):
 # ! Gestion Back-End des Stocks
 # ? Afficher la page d'enregistrement des stocks
 @app.route('/stock/', methods=['GET', 'POST'])
+@login_required
 def stock():
     # ? Connection à ma db
     mysql = pymysql.connect(
@@ -712,6 +749,7 @@ def stock():
 
 # ? Afficher tous les stocks
 @app.route('/liste_stock/', methods=['GET'])
+@login_required
 def liste_stock():
     try:
         # ? Connection à ma db
@@ -746,6 +784,7 @@ def liste_stock():
 
 # ? Supprimer les Stocks
 @app.route("/supprimer_stock/<int:_id>")
+@login_required
 def supprimer_stock(_id):
     try:
         # ? Connection à ma db
@@ -775,6 +814,7 @@ def supprimer_stock(_id):
 
 # ? Modifier les stocks
 @app.route('/modifier_stock/<int:_id>', methods=['GET', 'POST'])
+@login_required
 def modifier_stock(_id):
     try:
         # ? Connection à ma db
